@@ -3,26 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/searchBinFragment">
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.tadiuzzz.binchecker.ui.SearchBinFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_search_bin">
-
+        android:id="@+id/searchBinFragment"
+        android:name="com.tadiuzzz.binchecker.ui.searchBin.BinHistoryFragment"
+        android:label="BIN History"
+        tools:layout="@layout/fragment_bin_details">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_searchBinFragment_to_binDetailsFragment"
+            app:destination="@id/binDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.tadiuzzz.binchecker.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        android:id="@+id/binDetailsFragment"
+        android:name="com.tadiuzzz.binchecker.ui.binDetails.BinDetailsFragment"
+        android:label="BIN Details">
+        <argument
+            android:name="binId"
+            app:argType="long" />
     </fragment>
 </navigation>

@@ -6,6 +6,6 @@ data class BinCountry(
     val name: String,
     val emoji: String,
     val currency: String,
-    val lattitude: Float,
-    val longtitude: Float
+    val latitude: Float,
+    val longitude: Float
 )

@@ -10,9 +10,13 @@ class BinRepositoryImpl(
     private val binApi: BinApiInterface
 ): BinRepository {
 
-    override suspend fun loadBin(bin: String) {
-        val binInfo = binApi.getBinInfo(bin)
+    //TODO temp
+    var binInfo: BinInfo? = null
+
+    override suspend fun loadBin(bin: String): Long {
+        binInfo = binApi.getBinInfo(bin)
         Log.d("OLOLO", "loadBin: $binInfo")
+        return 222
     }
 
     override fun getBinHistoryList(): LiveData<BinInfo> {
@@ -20,6 +24,7 @@ class BinRepositoryImpl(
     }
 
     override suspend fun getBinItem(binId: Long): BinInfo {
-        TODO("Not yet implemented")
+        //TODO temp
+        return binInfo!!
     }
 }

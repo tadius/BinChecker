@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.tadiuzzz.binchecker.domain.model.BinInfo
 
 interface BinRepository {
-    suspend fun loadBin(bin: String)
+    suspend fun loadBin(bin: String): Long
     fun getBinHistoryList(): LiveData<BinInfo>
     suspend fun getBinItem(binId: Long): BinInfo
 }
