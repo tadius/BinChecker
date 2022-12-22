@@ -250,10 +250,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Longitude: "
-                app:layout_constraintBottom_toBottomOf="@+id/tvCountryLatLabel"
-                app:layout_constraintStart_toEndOf="@+id/tvCountryLat"
-                app:layout_constraintTop_toTopOf="@+id/tvCountryLatLabel" />
+                android:layout_marginTop="8dp"
+                android:text="Latitude: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCountryLat" />
 
             <TextView
                 android:id="@+id/tvCountryLon"
@@ -285,7 +285,7 @@
                 android:layout_marginTop="32dp"
                 android:text="BANK"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCountryLatLabel" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCountryLonLabel" />
 
             <TextView
                 android:id="@+id/tvBank"

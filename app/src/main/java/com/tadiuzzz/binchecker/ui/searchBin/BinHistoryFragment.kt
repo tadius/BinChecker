@@ -18,9 +18,18 @@ class BinHistoryFragment : Fragment() {
 
     private val viewModel: BinHistoryViewModel by viewModel()
 
-    private val adapter: BinHistoryAdapter = BinHistoryAdapter { item ->
-        viewModel.onBinHistoryItemClicked(item.id ?: -1)
-    }
+    private val adapter: BinHistoryAdapter = BinHistoryAdapter(
+        onItemClick = { item ->
+            item.id?.let {
+                viewModel.onBinHistoryItemClicked(it)
+            }
+        },
+        onDeleteClick = { item ->
+            item.id?.let {
+                viewModel.onDeleteHistoryItemClicked(it)
+            }
+        },
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

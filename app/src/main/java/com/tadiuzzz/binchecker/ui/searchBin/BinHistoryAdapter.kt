@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tadiuzzz.binchecker.domain.model.BinInfo
 
 class BinHistoryAdapter(
-    private val onItemClick: (item: BinInfo) -> Unit
+    private val onItemClick: (item: BinInfo) -> Unit,
+    private val onDeleteClick: (item: BinInfo) -> Unit,
 ) : ListAdapter<BinInfo, BinHistoryViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -15,6 +16,11 @@ class BinHistoryAdapter(
             binding.root.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     getItem(adapterPosition)?.let(onItemClick)
+                }
+            }
+            binding.ivDelete.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    getItem(adapterPosition)?.let(onDeleteClick)
                 }
             }
         }

@@ -6,7 +6,6 @@ import com.tadiuzzz.binchecker.data.remote.BinApiInterface
 import com.tadiuzzz.binchecker.domain.BinRepository
 import com.tadiuzzz.binchecker.domain.model.BinInfo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 
 class BinRepositoryImpl(
@@ -37,5 +36,9 @@ class BinRepositoryImpl(
         db.binInfoDao.insertBinInfo(
             BinInfoEntity.mapFromBinInfo(binInfo, bin)
         )
+    }
+
+    override suspend fun deleteHistoryItem(binId: Long) {
+        db.binInfoDao.deleteBinInfo(binId)
     }
 }

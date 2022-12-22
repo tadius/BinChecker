@@ -40,5 +40,11 @@ class BinHistoryViewModel(
         }
     }
 
+    fun onDeleteHistoryItemClicked(binId: Long) {
+        viewModelScope.launch {
+            repository.deleteHistoryItem(binId)
+        }
+    }
+
 
 }

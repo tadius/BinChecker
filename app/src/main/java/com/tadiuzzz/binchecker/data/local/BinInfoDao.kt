@@ -13,10 +13,13 @@ interface BinInfoDao {
     @Query("SELECT * FROM bininfo")
     fun getBinInfoHistory(): Flow<List<BinInfoEntity>>
 
-    @Query("SELEcT * FROM bininfo WHERE id = :id")
+    @Query("SELECT * FROM bininfo WHERE id = :id")
     suspend fun getBinInfoById(id: Long): BinInfoEntity?
 
     @Insert(onConflict = REPLACE)
     suspend fun insertBinInfo(binInfoEntity: BinInfoEntity)
+
+    @Query("DELETE FROM bininfo WHERE id = :id")
+    suspend fun deleteBinInfo(id: Long)
 
 }

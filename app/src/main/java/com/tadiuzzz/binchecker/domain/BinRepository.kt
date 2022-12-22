@@ -8,4 +8,5 @@ interface BinRepository {
     fun getBinHistoryList(): Flow<List<BinInfo>>
     suspend fun getBinItem(binId: Long): BinInfo?
     suspend fun saveBinHistoryItem(binInfo: BinInfo, bin: String)
+    suspend fun deleteHistoryItem(binId: Long)
 }
