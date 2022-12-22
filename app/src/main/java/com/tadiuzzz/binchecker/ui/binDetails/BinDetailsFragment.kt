@@ -11,13 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import com.tadiuzzz.binchecker.databinding.FragmentBinDetailsBinding
 import com.tadiuzzz.binchecker.ui.binDetails.model.BinDetailsState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class BinDetailsFragment : Fragment() {
 
     private var _binding: FragmentBinDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: BinDetailsViewModel by viewModel()
+    private val binId: Long? by lazy {
+        val args = arguments
+        if (args != null) {
+            BinDetailsFragmentArgs.fromBundle(args).binId
+        } else null
+    }
+
+    private val viewModel: BinDetailsViewModel by viewModel { parametersOf(binId) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,23 +86,23 @@ class BinDetailsFragment : Fragment() {
                             tvBrand.text = binInfo.brand
                             tvPrepaid.text = if (binInfo.prepaid) "YES" else "NO"
 
-                            binInfo.number?.let {
-                                tvCardNumberLength.text = binInfo.number.length.toString()
-                                tvCardLuhn.text = if (binInfo.number.luhn) "YES" else "NO"
-                            }
+                            tvCardNumberLength.text = (binInfo.number?.length ?: "?").toString()
+                            val luhn = if (binInfo.number?.luhn != null) {
+                                if (binInfo.number.luhn) "YES" else "NO"
+                            } else "?"
+                            tvCardLuhn.text = luhn
 
-                            binInfo.country?.let {
-                                val countryText = "${binInfo.country.emoji} ${binInfo.country.name}"
-                                tvCountry.text = countryText
-                                tvCountryLat.text = binInfo.country.latitude.toString()
-                                tvCountryLon.text = binInfo.country.longitude.toString()
-                            }
+                            val countryText =
+                                if (binInfo.country?.emoji != null && binInfo.country.name != null) {
+                                    "${binInfo.country.emoji} ${binInfo.country.name}"
+                                } else "?"
+                            tvCountry.text = countryText
+                            tvCountryLat.text = (binInfo.country?.latitude ?: "?").toString()
+                            tvCountryLon.text = (binInfo.country?.longitude ?: "?").toString()
 
-                            binInfo.bank?.let {
-                                tvBank.text = binInfo.bank.name
-                                tvLink.text = binInfo.bank.url
-                                tvPhone.text = binInfo.bank.phone
-                            }
+                            tvBank.text = binInfo.bank?.name ?: "?"
+                            tvLink.text = binInfo.bank?.url ?: "?"
+                            tvPhone.text = binInfo.bank?.phone ?: "?"
 
                         }
                     }
@@ -140,5 +148,4 @@ class BinDetailsFragment : Fragment() {
         _binding = null
     }
 
-    //TODO pass argument
 }

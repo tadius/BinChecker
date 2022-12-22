@@ -1,6 +1,7 @@
 package com.tadiuzzz.binchecker
 
 import android.app.Application
+import com.tadiuzzz.binchecker.di.localDataKoinModule
 import com.tadiuzzz.binchecker.di.networkKoinModule
 import com.tadiuzzz.binchecker.di.viewModelKoinModule
 import org.koin.android.ext.koin.androidContext
@@ -19,7 +20,8 @@ class App : Application() {
             modules(
                 listOf(
                     viewModelKoinModule,
-                    networkKoinModule
+                    networkKoinModule,
+                    localDataKoinModule
                 )
             )
         }

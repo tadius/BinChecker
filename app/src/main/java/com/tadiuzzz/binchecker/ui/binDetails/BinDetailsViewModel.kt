@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class BinDetailsViewModel(
-//    private val binId: Long,
+    private val binId: Long?,
     private val repository: BinRepository
 ) : ViewModel() {
 
@@ -19,6 +19,18 @@ class BinDetailsViewModel(
     private val _binDetailsState: MutableStateFlow<BinDetailsState> =
         MutableStateFlow(BinDetailsState.Editing)
     val binDetailsState = _binDetailsState.asStateFlow()
+
+    init {
+        binId?.let {
+            viewModelScope.launch {
+                val binInfo = repository.getBinItem(binId)
+                binInfo?.let {
+                    _binText.value = it.bin ?: ""
+                    _binDetailsState.value = BinDetailsState.Success(it)
+                }
+            }
+        }
+    }
 
     fun onBinTextChanged(text: String) {
         _binDetailsState.value = BinDetailsState.Editing
@@ -32,11 +44,9 @@ class BinDetailsViewModel(
             kotlin.runCatching {
                 _binDetailsState.value = BinDetailsState.Loading
                 val bin = binText.value
-                val binId = repository.loadBin(bin)
-                val binInfo = repository.getBinItem(binId)
+                val binInfo = repository.loadBin(bin)
                 _binDetailsState.value = BinDetailsState.Success(binInfo)
             }.onFailure {
-                //TODO разные ошибки
                 _binDetailsState.value = BinDetailsState.Error("Ошибка получения информации о BIN")
             }
         }

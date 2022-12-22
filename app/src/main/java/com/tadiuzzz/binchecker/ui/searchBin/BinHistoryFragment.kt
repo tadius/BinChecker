@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tadiuzzz.binchecker.databinding.FragmentBinHistoryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,6 +17,10 @@ class BinHistoryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: BinHistoryViewModel by viewModel()
+
+    private val adapter: BinHistoryAdapter = BinHistoryAdapter { item ->
+        viewModel.onBinHistoryItemClicked(item.id ?: -1)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +33,18 @@ class BinHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.rvBinHistory.layoutManager = LinearLayoutManager(context)
+        binding.rvBinHistory.adapter = adapter
+
         binding.btnNewSearch.setOnClickListener {
             viewModel.onNewSearchClicked()
         }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.binHistory.collect { list ->
+                adapter.submitList(list)
+            }
+        }
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.openSearchBinScreenEvent.collect { binId ->
                 val action =

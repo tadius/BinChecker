@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -65,4 +66,11 @@ dependencies {
 
     // Koin
     api "io.insert-koin:koin-android:3.3.0"
+
+    //Room
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+
+    //Kotlin extensions and coroutines support for Room
+    implementation "androidx.room:room-ktx:2.4.3"
 }
