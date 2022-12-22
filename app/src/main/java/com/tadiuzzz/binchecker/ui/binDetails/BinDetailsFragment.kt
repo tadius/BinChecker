@@ -1,5 +1,7 @@
 package com.tadiuzzz.binchecker.ui.binDetails
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.tadiuzzz.binchecker.databinding.FragmentBinDetailsBinding
 import com.tadiuzzz.binchecker.ui.binDetails.model.BinDetailsState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+
 
 class BinDetailsFragment : Fragment() {
 
@@ -57,6 +60,22 @@ class BinDetailsFragment : Fragment() {
 
         binding.tvPhone.setOnClickListener {
             viewModel.onPhoneClicked()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.openMapEvent.collect { geo ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(geo)))
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.openPhoneEvent.collect { phone ->
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(phone)))
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.openWebEvent.collect { link ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link)))
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
